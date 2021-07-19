@@ -85,59 +85,50 @@ public class ExtractedActivity extends AppCompatActivity {
 
                             case Entity.TYPE_DATE_TIME:
                                 DateTimeEntity dateTimeEntity = entity.asDateTimeEntity();
-                                assert dateTimeEntity != null;
+                                //assert dateTimeEntity != null;
 
-                                if(!p.containsKey("Granularity")){
-                                    p.put("Granularity",new ArrayList<String>());
+                                if(dateTimeEntity!=null){
+
+                                    k= k + "\n\n" + "Granularity : " + Integer.toString(dateTimeEntity.getDateTimeGranularity()) + "\n"
+                                    + "Timestamp:" + Integer.toString((int) dateTimeEntity.getTimestampMillis()) +"\n";
+
+
+                                    Toast.makeText(ExtractedActivity.this,Integer.toString(dateTimeEntity.getDateTimeGranularity()) , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ExtractedActivity.this, Integer.toString((int) dateTimeEntity.getTimestampMillis()), Toast.LENGTH_SHORT).show();
+
                                 }
-                                Objects.requireNonNull(p.get("Granularity")).add(Integer.toString(dateTimeEntity.getDateTimeGranularity()));
 
 
-                                if(!p.containsKey("Timestamp")){
-                                    p.put("Timestamp",new ArrayList<String>());
-                                }
-                                Objects.requireNonNull(p.get("Timestamp")).add(Integer.toString((int) dateTimeEntity.getTimestampMillis()));
-//                                k = k + "\n Granularity: " + dateTimeEntity.getDateTimeGranularity() +
-//                                "\n" +"Timestamp: " + dateTimeEntity.getTimestampMillis();
+
 
                             case Entity.TYPE_FLIGHT_NUMBER:
                                 FlightNumberEntity flightNumberEntity = entity.asFlightNumberEntity();
-                                //assert flightNumberEntity != null;
 
-                                if(!p.containsKey("Airline Code")){
-                                    p.put("Airline Code",new ArrayList<String>());
+                                if(flightNumberEntity!=null){
+
+                                    k =k + "\n\n" + "Airline Code : " + flightNumberEntity.getAirlineCode() +"\n" + "Flight Number : "+
+                                            flightNumberEntity.getFlightNumber() + "\n";
+
+
+                                    Toast.makeText(ExtractedActivity.this, flightNumberEntity.getAirlineCode(), Toast.LENGTH_SHORT).show();
+
                                 }
-                                Objects.requireNonNull(p.get("Airline Code")).add(flightNumberEntity.getAirlineCode());
 
-                                if(!p.containsKey("Flight number")){
-                                    p.put("Flight number",new ArrayList<String>());
-                                }
-                                Objects.requireNonNull(p.get("Flight number")).add(flightNumberEntity.getFlightNumber());
 
-//                                k = k + "\n" + "Airline Code: " + flightNumberEntity.getAirlineCode()
-//                                + "\n" + "Flight number: " + flightNumberEntity.getFlightNumber();
+
 
                             case Entity.TYPE_MONEY:
                                 MoneyEntity moneyEntity = entity.asMoneyEntity();
-                                assert moneyEntity != null;
 
-                                if(!p.containsKey("Currency")){
-                                    p.put("Currency",new ArrayList<String>());
-                                }
-                                Objects.requireNonNull(p.get("Currency")).add(moneyEntity.getUnnormalizedCurrency());
+                                if(moneyEntity!=null){
+                                    Toast.makeText(ExtractedActivity.this, moneyEntity.getUnnormalizedCurrency(), Toast.LENGTH_SHORT).show();
 
-                                if(!p.containsKey("Integer Part")){
-                                    p.put("Integer Part",new ArrayList<String>());
-                                }
-                                Objects.requireNonNull(p.get("Integer Part")).add(Integer.toString(moneyEntity.getIntegerPart()));
+                                    k = k+ "\n\n" + "Currency : " + moneyEntity.getUnnormalizedCurrency() + "\n" +
+                                            "Integer Part : " + Integer.toString(moneyEntity.getIntegerPart()) + "\n" +
+                                            "Fractional Part : " + Integer.toString(moneyEntity.getFractionalPart());
 
-                                if(!p.containsKey("Fractional Part")){
-                                    p.put("Fractional Part",new ArrayList<String>());
+
                                 }
-                                Objects.requireNonNull(p.get("Fractional Part")).add(Integer.toString(moneyEntity.getFractionalPart()));
-//                                k=k+ "\n" + "Currency: " + moneyEntity.getUnnormalizedCurrency()
-//                                        + "\n" + "Integer Part: " + moneyEntity.getIntegerPart()
-//                                        + "\n" + "Fractional Part: " + moneyEntity.getFractionalPart();
 
 
 
@@ -145,12 +136,10 @@ public class ExtractedActivity extends AppCompatActivity {
 
 
                             default:
-                                if(!p.containsKey("Entity")){
-                                    p.put("Entity",new ArrayList<String>());
-                                }
-                                Objects.requireNonNull(p.get("Entity")).add(entity.toString());
 
-                                //k = k + "\n" + "Entity: " + entity;
+                                Toast.makeText(ExtractedActivity.this, "Not found", Toast.LENGTH_SHORT).show();
+
+                                k =k + "\n" + "Entity: " + entity;
 
 
 
@@ -170,12 +159,18 @@ public class ExtractedActivity extends AppCompatActivity {
 
 
 
-                    //textView.setText(k);
+                }
 
+                if(k.isEmpty()){
 
+                    textView.setText("No identifiable data extracted :( \nBut we'll improve in coming time :) ");
 
+                } else{
+                    textView.setText(k);
 
                 }
+
+
 
 
 
@@ -189,27 +184,7 @@ public class ExtractedActivity extends AppCompatActivity {
             }
         });
 
-        if(p.containsKey("Fractional Part")){
 
-//                        m = p.get("Flight number");
-//
-//                        assert m != null;
-//                        Toast.makeText(ExtractedActivity.this, m.get(0), Toast.LENGTH_SHORT).show();
-            Toast.makeText(ExtractedActivity.this, "Flight", Toast.LENGTH_SHORT).show();
-
-        }
-
-
-
-        if(p.containsKey("Currency")){
-
-//                        m = p.get("Currency");
-//
-//                        assert m != null;
-//                        Toast.makeText(ExtractedActivity.this, m.get(0), Toast.LENGTH_SHORT).show();
-            Toast.makeText(ExtractedActivity.this, "Currency", Toast.LENGTH_SHORT).show();
-
-        }
 
 
 
